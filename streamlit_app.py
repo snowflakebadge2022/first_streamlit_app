@@ -1,4 +1,5 @@
-import streamlit, pandas 
+import streamlit
+import pandas 
 
 streamlit.title("My parents new healthy Diner")
 
