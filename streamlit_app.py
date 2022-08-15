@@ -14,7 +14,7 @@ streamlit.text('Hard-Boiled Free-Range Egg')
 my_fruit_list = pandas.read_csv("https://uni-lab-files.s3.us-west-2.amazonaws.com/dabw/fruit_macros.txt")
 my_fruit_list = my_fruit_list.set_index('Fruit')
 
-
+  my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 fruits_selected = streamlit.multiselect("Pick some fruits:", list(my_fruit_list.index), ['Avocado', 'Strawberries'])
 fruits_to_show = my_fruit_list.loc[fruits_selected]
 
@@ -45,7 +45,7 @@ if streamlit.button('get fruit list'):
      my_cnx.close()
      streamlit.dataframe(my_data_rows)
 
-    
+  
 
 add_my_fruit = streamlit.text_input('what fruit would you like to add?')
 if streamlit.button('add fruit to the list'):
