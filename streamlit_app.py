@@ -27,9 +27,9 @@ try:
     streamlit.error("please select a fruit to get information")
     streamlit.write('The user entered ', fruit_choice)
   else: 
-    fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
-    fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
+    back_from_function = get_fruitvice_data(fruit_choice) 
     streamlit.dataframe(fruityvice_normalized)
+    
 except URLError as e: 
     streamlit.error()
   
@@ -43,3 +43,7 @@ streamlit.dataframe(my_data_rows)
 add_my_fruit = streamlit.text_input('what fruit would you like to add?')
 streamlit.write('The user entered ', add_my_fruit)
 my_cur.execute("insert into fruit_load_list values ('from streamlit')")
+
+def get_fruitvice_data(fruit_choice): 
+    fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
+    fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
