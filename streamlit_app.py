@@ -15,6 +15,11 @@ my_fruit_list = pandas.read_csv("https://uni-lab-files.s3.us-west-2.amazonaws.co
 my_fruit_list = my_fruit_list.set_index('Fruit')
 
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+
+def insert_row_snowflake(new_fruit):
+  with my_cnx.cursor() as my_cur: 
+    my_cur.execute("insert into fruit_load_list values ('" + new_fruit + "')")
+    return "thanks for adding" + new_fruit 
 fruits_selected = streamlit.multiselect("Pick some fruits:", list(my_fruit_list.index), ['Avocado', 'Strawberries'])
 fruits_to_show = my_fruit_list.loc[fruits_selected]
 
@@ -58,7 +63,4 @@ def get_fruitvice_data(fruit_choice):
     fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
     fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
     
-def insert_row_snowflake(new_fruit):
-  with my_cnx.cursor() as my_cur: 
-    my_cur.execute("insert into fruit_load_list values ('" + new_fruit + "')")
-    return "thanks for adding" + new_fruit 
+
