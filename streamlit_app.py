@@ -30,8 +30,8 @@ try:
     fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
     fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
     streamlit.dataframe(fruityvice_normalized)
- except URLError as e: 
-  streamlit.error()
+except URLError as e: 
+    streamlit.error()
   
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor()
